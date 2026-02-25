@@ -9,5 +9,7 @@ namespace Frags.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = null!;
+
+        public ICollection<Fragrance> Fragrances { get; set; } = new List<Fragrance>();
     }
 }

@@ -22,6 +22,9 @@ namespace Frags.Models
         [StringLength(1000)]
         public string Description { get; set; } = null!;
 
+        [Required]
+        public string Gender { get; set; } = null!;
+
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
     }
