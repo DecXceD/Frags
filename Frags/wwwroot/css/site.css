@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.card-img-top {
+    height: 240px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+}

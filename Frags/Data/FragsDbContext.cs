@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Frags.Areas.Identity.Data;
+namespace Frags.Data;
 
 public class FragsDbContext : IdentityDbContext<IdentityUser>
 {

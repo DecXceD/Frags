@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Frags.Models.Fragrance>
+
+<h2 class="mb-4">Shop</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name"/>
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="text-muted">@item.Gender</p>
+                    <p class="fw-bold">$@item.Price</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

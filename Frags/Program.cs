@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Frags.Areas.Identity.Data;
+using Frags.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FragsDbContextConnection") ?? throw new InvalidOperationException("Connection string 'FragsDbContextConnection' not found.");
