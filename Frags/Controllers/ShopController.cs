@@ -21,5 +21,19 @@ namespace Frags.Controllers
 
             return View(fragrances);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var fragrance = await _context.Fragrances
+                .Include(f => f.Category)
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (fragrance == null)
+            {
+                return NotFound();
+            }
+
+            return View(fragrance);
+        }
     }
 }

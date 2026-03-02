@@ -1,0 +1,27 @@
+﻿@model Frags.Models.Fragrance
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="@Model.ImageUrl"
+             class="img-fluid rounded shadow-sm"
+             alt="@Model.Name" />
+    </div>
+
+    <div class="col-md-6">
+        <h2>@Model.Name</h2>
+
+        <p class="text-muted">
+            @Model.Gender | @Model.Category.Name
+        </p>
+
+        <h4 class="fw-bold mb-3">$@Model.Price</h4>
+
+        <p>@Model.Description</p>
+
+        <a asp-controller="Shop"
+           asp-action="Index"
+           class="btn btn-outline-secondary mt-3">
+            ← Back to Shop
+        </a>
+    </div>
+</div>
