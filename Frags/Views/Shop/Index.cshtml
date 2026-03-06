@@ -7,25 +7,17 @@
     {
         <div class="col-md-3 mb-4">
 
-            <a asp-controller="Shop"
-               asp-action="Details"
-               asp-route-id="@item.Id"
-               class="text-decoration-none text-dark">
-
+            <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm">
-                    <img src="@item.ImageUrl"
-                         class="card-img-top"
-                         alt="@item.Name" />
-
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" />
                     <div class="card-body text-center">
                         <h5 class="card-title">@item.Name</h5>
                         <p class="text-muted">@item.Gender</p>
+                        <p class="text-secondary small">@item.Category.Name</p>
                         <p class="fw-bold">$@item.Price</p>
                     </div>
                 </div>
-
             </a>
-
         </div>
     }
 </div>

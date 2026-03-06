@@ -22,3 +22,8 @@ body {
     object-fit: contain;
     background-color: #f8f9fa;
 }
+
+.card:hover {
+    transform: scale(1.03);
+    transition: 0.2s;
+}

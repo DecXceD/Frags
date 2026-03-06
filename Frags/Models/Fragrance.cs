@@ -25,6 +25,7 @@ namespace Frags.Models
         [Required]
         public string Gender { get; set; } = null!;
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         public Category? Category { get; set; }
