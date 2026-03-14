@@ -19,14 +19,12 @@ namespace Frags.Controllers
             _context = context;
         }
 
-        // GET: Fragrances
         public async Task<IActionResult> Index()
         {
             var fragsDbContext = _context.Fragrances.Include(f => f.Category);
             return View(await fragsDbContext.ToListAsync());
         }
 
-        // GET: Fragrances/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Fragrances == null)
@@ -45,16 +43,12 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        // GET: Fragrances/Create
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
-        // POST: Fragrances/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Price,ImageUrl,Description,Gender,CategoryId")] Fragrance fragrance)
@@ -79,7 +73,6 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        // GET: Fragrances/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Fragrances == null)
@@ -96,9 +89,6 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        // POST: Fragrances/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,ImageUrl,Description,Gender,CategoryId")] Fragrance fragrance)
@@ -132,7 +122,6 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        // GET: Fragrances/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Fragrances == null)
@@ -151,7 +140,6 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        // POST: Fragrances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
