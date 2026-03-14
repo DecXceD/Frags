@@ -5,7 +5,7 @@ The project is an online fragrance shop where users can:
 - View fragrance details
 - Manage fragrances through CRUD operations (will be limited to admin users in the second part of the project)
 
-Technologies Used:
+## Technologies Used
 - ASP.NET Core MVC
 - Entity Framework Core
 - SQL Server
@@ -13,9 +13,9 @@ Technologies Used:
 - Razor Views
 - ASP.NET Identity
 
-Models:
+## Models
 
-**Fragrance**
+### Fragrance
 - Id (primary key)
 - Name
 - Price
@@ -25,119 +25,119 @@ Models:
 - CategoryId (foreign key)
 - Category (access the related category)
 
-**Category**
+### Category
 - Id (primary key)
 - Name
 - Fragrances (collection of related fragrances)
 
-**IdentityUser**
+### IdentityUser
 - Used for authentication (ASP.NET Identity)
 
-Controllers:
+## Controllers
 
 **FragrancesController**  
 - Handles fragrance-related actions  
-  (details, create, edit, delete)
+  details, create, edit, delete
 
 **HomeController**  
 - Handles the home page and general site navigation
 
 **ShopController**  
 - Handles the shopping experience  
-  (browsing fragrances)
+  browsing fragrances
 
-Views:
+## Views
 
-**Home**
-- `Index.cshtml`  
-  (home page)
-- `Privacy.cshtml`  
-  (privacy policy)
+**Home**  
+- Index.cshtml  
+  home page  
+- Privacy.cshtml  
+  privacy policy
 
-**Shop**
-- `Index.cshtml`  
-  (home page with featured fragrances)
-- `Details.cshtml`  
-  (fragrance details)
+**Shop**  
+- Index.cshtml  
+  home page with featured fragrances  
+- Details.cshtml  
+  fragrance details
 
-**Manage Fragrances**
-- `Index.cshtml`  
-  (list of fragrances)
-- `Details.cshtml`  
-  (fragrance details)
-- `Create.cshtml`  
-  (form to create a new fragrance)
-- `Edit.cshtml`  
-  (form to edit an existing fragrance)
-- `Delete.cshtml`  
-  (confirmation page for deleting a fragrance)
+**Manage Fragrances**  
+- Index.cshtml  
+  list of fragrances  
+- Details.cshtml  
+  fragrance details  
+- Create.cshtml  
+  form to create a new fragrance  
+- Edit.cshtml  
+  form to edit an existing fragrance  
+- Delete.cshtml  
+  confirmation page for deleting a fragrance
 
-**Shared**
-- `_Layout.cshtml`  
-  (common layout for all pages)
-- `_LoginPartial.cshtml`  
-  (partial view for login/logout links)
+**Shared**  
+- _Layout.cshtml  
+  common layout for all pages  
+- _LoginPartial.cshtml  
+  partial view for login/logout links
 
-Navigation:
+## Navigation
 
-**Home/Main Page**
+**Home/Main Page**  
 - `/Home`  
-  Displays the home page
+  Displays the home page  
 - `/Home/Index`  
   Displays the home page
 
-**Privacy**
+**Privacy**  
 - `/Home/Privacy`  
   Displays the privacy policy
 
-**Shop**
+**Shop**  
 - `/Shop`  
-  Displays all fragrances
+  Displays all fragrances  
 - `/Shop/Details/{id}`  
   Shows fragrance details
 
-**Manage Fragrances**
+**Manage Fragrances**  
 - `/Fragrances`  
-  Displays the fragrance management page
+  Displays the fragrance management page  
 - `/Fragrances/Details/{id}`  
-  Shows fragrance details
+  Shows fragrance details  
 - `/Fragrances/Create`  
-  Form to create a new fragrance
+  Form to create a new fragrance  
 - `/Fragrances/Edit/{id}`  
-  Form to edit an existing fragrance
+  Form to edit an existing fragrance  
 - `/Fragrances/Delete/{id}`  
   Confirmation page for deleting a fragrance
 
-**Authentication**
+**Authentication**  
 - `/Identity/Account/Register`  
-  User registration page
+  User registration page  
 - `/Identity/Account/Login`  
   User login page
 
-Database:
-- Entity Framework Core
-- SQL Server
-- Code First approach
-- Migrations enabled
+## Database
+- Entity Framework Core  
+- SQL Server  
+- Code First approach  
+- Migrations enabled  
 - Seeded initial data (categories and fragrances, default admin user will be added in the second part of the project)
 
-Setup Instructions:
-1. Clone the repository
-2. Open the solution in Visual Studio
-3. Restore NuGet packages
-4. Run Update-Database in the Package Manager Console to apply migrations and seed the database
-5. Start the application
+## Setup Instructions
+1. Clone the repository  
+2. Open the solution in Visual Studio  
+3. Restore NuGet packages  
+4. Run Update-Database in the Package Manager Console to apply migrations and seed the database  
+5. Start the application  
 
-The project runs using the default configuration. If needed - the connection string can be changed from `appsettings.json` in order to access the database from MSSQL instead of SQL Server Object Explorer.
+The project runs using the default configuration. If needed, the connection string can be changed from `appsettings.json` to access the database from MSSQL instead of SQL Server Object Explorer.
 
-Future Improvements (ASP.NET Advanced):
-- Admin roles and authorization
-- Shopping cart system
-- Orders and checkout
-- Filtering and searching
+## Future Improvements (ASP.NET Advanced)
+- Admin roles and authorization  
+- Shopping cart system  
+- Orders and checkout  
+- Filtering and searching  
 - Improved UI/UX
 
-Author:  
-Alexander Isaev (DecXceD)
+## Author
+Alexander Isaev (DecXceD)  
 
 Student project for ASP.NET Fundamentals course.
