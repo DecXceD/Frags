@@ -22,7 +22,7 @@ Fragrance
 - Description
 - Gender
 - CategoryId(foreign key)
-- Category(lets you access the related category)
+- Category(access the related category)
 
 Category
 - Id(primary key)
@@ -33,11 +33,14 @@ IdentityUser
 - Used for authentication (ASP.NET Identity)
 
 Controllers:
-FragrancesController - Handles fragrance-related actions (details, create, edit, delete)
+FragrancesController 
+- Handles fragrance-related actions (details, create, edit, delete)
 
-HomeController - Handles the home page and general site navigation
+HomeController 
+- Handles the home page and general site navigation
 
-ShopController - Handles the shopping experience (browsing fragrances)
+ShopController 
+- Handles the shopping experience (browsing fragrances)
 
 Views:
 Home
@@ -61,26 +64,26 @@ Shared
 
 Navigation:
 Home/Main Page
--/Home - Displays the home page
--/Home/Index - Displays the home page
+-`/Home` - Displays the home page
+-`/Home/Index` - Displays the home page
 
 Privacy
--/Home/Privacy - Displays the privacy policy
+-`/Home/Privacy` - Displays the privacy policy
 
 Shop
--/Shop - Displays all fragrances
--/Shop/Details/{id} - Shows fragrance details
+-`/Shop` - Displays all fragrances
+-`/Shop/Details/{id}` - Shows fragrance details
 
 Manage Fragrances
--/Fragrances - Displays the fragrance management page
--/Fragrances/Details/{id} - Shows fragrance details
--/Fragrances/Create - Form to create a new fragrance
--/Fragrances/Edit/{id} - Form to edit an existing fragrance
--/Fragrances/Delete/{id} - Confirmation page for deleting a fragrance
+-`/Fragrances` - Displays the fragrance management page
+-`/Fragrances/Details/{id}` - Shows fragrance details
+-`/Fragrances/Create` - Form to create a new fragrance
+-`/Fragrances/Edit/{id}` - Form to edit an existing fragrance
+-`/Fragrances/Delete/{id}` - Confirmation page for deleting a fragrance
 
 Authentication
--/Identity/Account/Register - User registration page
--/Identity/Account/Login - User login page
+-`/Identity/Account/Register` - User registration page
+-`/Identity/Account/Login` - User login page
 
 Database:
 - Entity Framework Core
