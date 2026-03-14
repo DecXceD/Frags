@@ -36,83 +36,58 @@ The project is an online fragrance shop where users can:
 ## Controllers
 
 **FragrancesController**  
-- Handles fragrance-related actions  
-  details, create, edit, delete
+- Handles fragrance-related actions - details, create, edit, delete
 
 **HomeController**  
 - Handles the home page and general site navigation
 
 **ShopController**  
-- Handles the shopping experience  
-  browsing fragrances
+- Handles the shopping experience - browsing fragrances
 
 ## Views
 
 **Home**  
-- Index.cshtml  
-  home page  
-- Privacy.cshtml  
-  privacy policy
+- Index.cshtml - home page  
+- Privacy.cshtml - privacy policy
 
 **Shop**  
-- Index.cshtml  
-  home page with featured fragrances  
-- Details.cshtml  
-  fragrance details
+- Index.cshtml - home page with featured fragrances  
+- Details.cshtml - fragrance details
 
 **Manage Fragrances**  
-- Index.cshtml  
-  list of fragrances  
-- Details.cshtml  
-  fragrance details  
-- Create.cshtml  
-  form to create a new fragrance  
-- Edit.cshtml  
-  form to edit an existing fragrance  
-- Delete.cshtml  
-  confirmation page for deleting a fragrance
+- Index.cshtml - list of fragrances  
+- Details.cshtml - fragrance details  
+- Create.cshtml - form to create a new fragrance  
+- Edit.cshtml - form to edit an existing fragrance  
+- Delete.cshtml - confirmation page for deleting a fragrance
 
 **Shared**  
-- _Layout.cshtml  
-  common layout for all pages  
-- _LoginPartial.cshtml  
-  partial view for login/logout links
+- _Layout.cshtml - common layout for all pages  
+- _LoginPartial.cshtml - partial view for login/logout links
 
 ## Navigation
 
 **Home/Main Page**  
-- `/Home`  
-  Displays the home page  
-- `/Home/Index`  
-  Displays the home page
+- `/Home` - displays the home page  
+- `/Home/Index` - displays the home page
 
 **Privacy**  
-- `/Home/Privacy`  
-  Displays the privacy policy
+- `/Home/Privacy` - displays the privacy policy
 
 **Shop**  
-- `/Shop`  
-  Displays all fragrances  
-- `/Shop/Details/{id}`  
-  Shows fragrance details
+- `/Shop` - displays all fragrances  
+- `/Shop/Details/{id}` - shows fragrance details
 
 **Manage Fragrances**  
-- `/Fragrances`  
-  Displays the fragrance management page  
-- `/Fragrances/Details/{id}`  
-  Shows fragrance details  
-- `/Fragrances/Create`  
-  Form to create a new fragrance  
-- `/Fragrances/Edit/{id}`  
-  Form to edit an existing fragrance  
-- `/Fragrances/Delete/{id}`  
-  Confirmation page for deleting a fragrance
+- `/Fragrances` - displays the fragrance management page  
+- `/Fragrances/Details/{id}` - shows fragrance details  
+- `/Fragrances/Create` - form to create a new fragrance  
+- `/Fragrances/Edit/{id}` - form to edit an existing fragrance  
+- `/Fragrances/Delete/{id}` - confirmation page for deleting a fragrance
 
 **Authentication**  
-- `/Identity/Account/Register`  
-  User registration page  
-- `/Identity/Account/Login`  
-  User login page
+- `/Identity/Account/Register` - user registration page  
+- `/Identity/Account/Login` - user login page
 
 ## Database
 - Entity Framework Core  
