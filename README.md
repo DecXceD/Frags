@@ -1,9 +1,9 @@
-Frags - ASP.NET Core MVC Fragrance Shop
+# Frags - ASP.NET Core MVC Fragrance Shop
 
 The project is an online fragrance shop where users can:
 - Browse fragrances
 - View fragrance details
-- Manage fragrances through CRUD operations(will be limited to admin users in the second part of the project)
+- Manage fragrances through CRUD operations (will be limited to admin users in the second part of the project)
 
 Technologies Used:
 - ASP.NET Core MVC
@@ -14,76 +14,105 @@ Technologies Used:
 - ASP.NET Identity
 
 Models:
-Fragrance
-- Id(primary key)
+
+**Fragrance**
+- Id (primary key)
 - Name
 - Price
 - ImageUrl
 - Description
 - Gender
-- CategoryId(foreign key)
-- Category(access the related category)
+- CategoryId (foreign key)
+- Category (access the related category)
 
-Category
-- Id(primary key)
+**Category**
+- Id (primary key)
 - Name
-- Fragrances(collection of related fragrances)
+- Fragrances (collection of related fragrances)
 
-IdentityUser
+**IdentityUser**
 - Used for authentication (ASP.NET Identity)
 
 Controllers:
-FragrancesController 
-- Handles fragrance-related actions (details, create, edit, delete)
 
-HomeController 
+**FragrancesController**  
+- Handles fragrance-related actions  
+  (details, create, edit, delete)
+
+**HomeController**  
 - Handles the home page and general site navigation
 
-ShopController 
-- Handles the shopping experience (browsing fragrances)
+**ShopController**  
+- Handles the shopping experience  
+  (browsing fragrances)
 
 Views:
-Home
-- Index.cshtml (home page)
-- Privacy.cshtml (privacy policy)
 
-Shop
-- Index.cshtml (home page with featured fragrances)
-- Details.cshtml (fragrance details)
+**Home**
+- `Index.cshtml`  
+  (home page)
+- `Privacy.cshtml`  
+  (privacy policy)
 
-Manage Fragrances
-- Index.cshtml (list of fragrances)
-- Details.cshtml (fragrance details)
-- Create.cshtml (form to create a new fragrance)
-- Edit.cshtml (form to edit an existing fragrance)
-- Delete.cshtml (confirmation page for deleting a fragrance)
+**Shop**
+- `Index.cshtml`  
+  (home page with featured fragrances)
+- `Details.cshtml`  
+  (fragrance details)
 
-Shared
-- _Layout.cshtml (common layout for all pages)
-- _LoginPartial.cshtml (partial view for login/logout links)
+**Manage Fragrances**
+- `Index.cshtml`  
+  (list of fragrances)
+- `Details.cshtml`  
+  (fragrance details)
+- `Create.cshtml`  
+  (form to create a new fragrance)
+- `Edit.cshtml`  
+  (form to edit an existing fragrance)
+- `Delete.cshtml`  
+  (confirmation page for deleting a fragrance)
+
+**Shared**
+- `_Layout.cshtml`  
+  (common layout for all pages)
+- `_LoginPartial.cshtml`  
+  (partial view for login/logout links)
 
 Navigation:
-Home/Main Page
--`/Home` - Displays the home page
--`/Home/Index` - Displays the home page
 
-Privacy
--`/Home/Privacy` - Displays the privacy policy
+**Home/Main Page**
+- `/Home`  
+  Displays the home page
+- `/Home/Index`  
+  Displays the home page
 
-Shop
--`/Shop` - Displays all fragrances
--`/Shop/Details/{id}` - Shows fragrance details
+**Privacy**
+- `/Home/Privacy`  
+  Displays the privacy policy
 
-Manage Fragrances
--`/Fragrances` - Displays the fragrance management page
--`/Fragrances/Details/{id}` - Shows fragrance details
--`/Fragrances/Create` - Form to create a new fragrance
--`/Fragrances/Edit/{id}` - Form to edit an existing fragrance
--`/Fragrances/Delete/{id}` - Confirmation page for deleting a fragrance
+**Shop**
+- `/Shop`  
+  Displays all fragrances
+- `/Shop/Details/{id}`  
+  Shows fragrance details
 
-Authentication
--`/Identity/Account/Register` - User registration page
--`/Identity/Account/Login` - User login page
+**Manage Fragrances**
+- `/Fragrances`  
+  Displays the fragrance management page
+- `/Fragrances/Details/{id}`  
+  Shows fragrance details
+- `/Fragrances/Create`  
+  Form to create a new fragrance
+- `/Fragrances/Edit/{id}`  
+  Form to edit an existing fragrance
+- `/Fragrances/Delete/{id}`  
+  Confirmation page for deleting a fragrance
+
+**Authentication**
+- `/Identity/Account/Register`  
+  User registration page
+- `/Identity/Account/Login`  
+  User login page
 
 Database:
 - Entity Framework Core
@@ -99,7 +128,7 @@ Setup Instructions:
 4. Run Update-Database in the Package Manager Console to apply migrations and seed the database
 5. Start the application
 
-The project runs using the default configuration. If needed - the connection string can be changed from appsettings.json in order to access the database from MSSQL instead of SQL Server Object Explorer.
+The project runs using the default configuration. If needed - the connection string can be changed from `appsettings.json` in order to access the database from MSSQL instead of SQL Server Object Explorer.
 
 Future Improvements (ASP.NET Advanced):
 - Admin roles and authorization
@@ -108,7 +137,7 @@ Future Improvements (ASP.NET Advanced):
 - Filtering and searching
 - Improved UI/UX
 
-Author:
-Alexander Isaev(DecXceD)
+Author:  
+Alexander Isaev (DecXceD)
 
 Student project for ASP.NET Fundamentals course.
