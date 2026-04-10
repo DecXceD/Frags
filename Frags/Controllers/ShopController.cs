@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Frags.Data;
+using Frags.Data.Data;
 
 namespace Frags.Controllers
 {

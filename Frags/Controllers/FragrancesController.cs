@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Frags.Data;
-using Frags.Models;
+using Frags.Data.Data;
+using Frags.Data.Models;
 
 namespace Frags.Controllers
 {

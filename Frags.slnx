@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="Frags/Frags.csproj" />
+  <Project Path="Frags.Data/Frags.Data.csproj" Id="acbeb16c-0c60-4517-a3ab-4beebadeba4e" />
+  <Project Path="Frags.Services/Frags.Services.csproj" Id="2ec8ff91-a6d6-4f12-9214-e4c3436c3020" />
+  <Project Path="Frags/Frags.csproj">
+    <BuildDependency Project="Frags.Data/Frags.Data.csproj" />
+  </Project>
 </Solution>
