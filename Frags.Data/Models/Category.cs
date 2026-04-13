@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Frags.Data.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Frags.Data.Models
 {
@@ -7,7 +8,7 @@ namespace Frags.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(ValidationConstants.CategoryNameMaxLength)]
         public string Name { get; set; } = null!;
 
         public ICollection<Fragrance> Fragrances { get; set; } = new List<Fragrance>();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Frags.Data.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Frags.Data.Models
@@ -8,10 +9,11 @@ namespace Frags.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(ValidationConstants.FragranceNameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Required]
+        [Range(ValidationConstants.FragrancePriceMin, ValidationConstants.FragrancePriceMax)]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
@@ -19,7 +21,7 @@ namespace Frags.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [StringLength(1000)]
+        [StringLength(ValidationConstants.FragranceDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
         [Required]
