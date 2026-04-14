@@ -1,40 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Frags.Data.Data;
+using Frags.Data.Models;
+using Frags.Services.Interfaces;
+using Frags.ViewModels.Fragrance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Frags.Data.Data;
-using Frags.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Frags.Controllers
 {
     public class FragrancesController : Controller
     {
-        private readonly FragsDbContext _context;
+        private readonly IFragranceService fragranceService;
+        private readonly ICategoryService categoryService;
 
-        public FragrancesController(FragsDbContext context)
+        public FragrancesController(IFragranceService fragranceService, ICategoryService categoryService)
         {
-            _context = context;
+            this.fragranceService = fragranceService;
+            this.categoryService = categoryService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var fragsDbContext = _context.Fragrances.Include(f => f.Category);
-            return View(await fragsDbContext.ToListAsync());
+            var fragrances = await fragranceService.GetAllAsync();
+            return View(fragrances);
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Fragrances == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var fragrance = await _context.Fragrances
-                .Include(f => f.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var fragrance = await fragranceService.GetByIdAsync(id.Value);
+
             if (fragrance == null)
             {
                 return NotFound();
@@ -43,95 +46,67 @@ namespace Frags.Controllers
             return View(fragrance);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
-            return View();
+            var model = new FragranceFormModel
+            {
+                Categories = await categoryService.GetAllAsync()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,ImageUrl,Description,Gender,CategoryId")] Fragrance fragrance)
+        public async Task<IActionResult> Create(FragranceFormModel model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(fragrance);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
             if (!ModelState.IsValid)
             {
-                foreach (var modelState in ModelState)
-                {
-                    foreach (var error in modelState.Value.Errors)
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
+                model.Categories = await categoryService.GetAllAsync();
+                return View(model);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", fragrance.CategoryId);
-            return View(fragrance);
+
+            await fragranceService.CreateAsync(model);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Fragrances == null)
+            var model = await fragranceService.GetForEditAsync(id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            var fragrance = await _context.Fragrances.FindAsync(id);
-            if (fragrance == null)
-            {
-                return NotFound();
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", fragrance.CategoryId);
-            return View(fragrance);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,ImageUrl,Description,Gender,CategoryId")] Fragrance fragrance)
+        public async Task<IActionResult> Edit(int id, FragranceFormModel model)
         {
-            if (id != fragrance.Id)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                model.Categories = await categoryService.GetAllAsync();
+                return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(fragrance);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FragranceExists(fragrance.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", fragrance.CategoryId);
-            return View(fragrance);
+            await fragranceService.UpdateAsync(id, model);
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Fragrances == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var fragrance = await _context.Fragrances
-                .Include(f => f.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var fragrance = await fragranceService.GetByIdAsync(id.Value);
+
             if (fragrance == null)
             {
                 return NotFound();
@@ -144,23 +119,8 @@ namespace Frags.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Fragrances == null)
-            {
-                return Problem("Entity set 'FragsDbContext.Fragrances'  is null.");
-            }
-            var fragrance = await _context.Fragrances.FindAsync(id);
-            if (fragrance != null)
-            {
-                _context.Fragrances.Remove(fragrance);
-            }
-            
-            await _context.SaveChangesAsync();
+            await fragranceService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool FragranceExists(int id)
-        {
-          return (_context.Fragrances?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

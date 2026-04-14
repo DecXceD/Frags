@@ -1,6 +1,8 @@
+using Frags.Data.Data;
+using Frags.Services.Interfaces;
+using Frags.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Frags.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FragsDbContextConnection") ?? throw new InvalidOperationException("Connection string 'FragsDbContextConnection' not found.");
@@ -10,6 +12,9 @@ builder.Services.AddDbContext<FragsDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<FragsDbContext>();
+
+builder.Services.AddScoped<IFragranceService, FragranceService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
