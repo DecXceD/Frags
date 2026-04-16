@@ -21,16 +21,23 @@ namespace Frags.ViewModels.Fragrance
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [MaxLength(ValidationConstants.DescriptionMaxLength)]
+        [MaxLength(ValidationConstants.FragranceDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
+        [Display(Name = "Brand")]
         [Required]
-        public string Gender { get; set; } = null!;
+        public int? BrandId { get; set; }
+
+        public IEnumerable<Brand> Brands { get; set; } = new List<Brand>();
+
 
         [Display(Name = "Category")]
         [Required]
         public int? CategoryId { get; set; }
 
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
+
+        [Required]
+        public string Gender { get; set; } = null!;
     }
 }

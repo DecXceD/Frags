@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Frags.Data.Data;
 
@@ -16,6 +16,7 @@ namespace Frags.Controllers
         public async Task<IActionResult> Index()
         {
             var fragrances = await _context.Fragrances
+                .Include(f => f.Brand)
                 .Include(f => f.Category)
                 .ToListAsync();
 
@@ -25,6 +26,7 @@ namespace Frags.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var fragrance = await _context.Fragrances
+                .Include(f => f.Brand)
                 .Include(f => f.Category)
                 .FirstOrDefaultAsync(f => f.Id == id);
 

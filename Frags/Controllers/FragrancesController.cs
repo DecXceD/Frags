@@ -1,6 +1,7 @@
 ﻿using Frags.Data.Data;
 using Frags.Data.Models;
 using Frags.Services.Interfaces;
+using Frags.Services.Services;
 using Frags.ViewModels.Fragrance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,11 +17,13 @@ namespace Frags.Controllers
     {
         private readonly IFragranceService fragranceService;
         private readonly ICategoryService categoryService;
+        private readonly IBrandService brandService;
 
-        public FragrancesController(IFragranceService fragranceService, ICategoryService categoryService)
+        public FragrancesController(IFragranceService fragranceService, ICategoryService categoryService, IBrandService brandService)
         {
             this.fragranceService = fragranceService;
             this.categoryService = categoryService;
+            this.brandService = brandService;
         }
 
         public async Task<IActionResult> Index()
@@ -50,7 +53,8 @@ namespace Frags.Controllers
         {
             var model = new FragranceFormModel
             {
-                Categories = await categoryService.GetAllAsync()
+                Categories = await categoryService.GetAllAsync(),
+                Brands = await brandService.GetAllAsync()
             };
 
             return View(model);

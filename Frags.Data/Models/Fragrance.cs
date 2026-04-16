@@ -24,16 +24,17 @@ namespace Frags.Data.Models
         [StringLength(ValidationConstants.FragranceDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        [Required]
-        public string Gender { get; set; } = null!;
+        public int BrandId { get; set; }
+
+        public Brand? Brand { get; set; }
+
 
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         public Category? Category { get; set; }
 
-        public int BrandId { get; set; }
-
-        public Brand? Brand { get; set; }
+        [Required]
+        public string Gender { get; set; } = null!;
     }
 }

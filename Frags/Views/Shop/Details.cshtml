@@ -8,10 +8,14 @@
     </div>
 
     <div class="col-md-6">
+        <p class="text-uppercase text-muted small mb-1">
+            @Model.Brand?.Name
+        </p>
+
         <h2>@Model.Name</h2>
 
         <p class="text-muted">
-            @Model.Gender | @Model.Category.Name
+            @Model.Category?.Name | @Model.Gender
         </p>
 
         <h4 class="fw-bold mb-3">$@Model.Price</h4>

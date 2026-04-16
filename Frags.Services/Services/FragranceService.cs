@@ -23,11 +23,13 @@ namespace Frags.Services.Services
         public async Task<IEnumerable<Fragrance>> GetAllAsync()
             => await context.Fragrances
                 .Include(f => f.Category)
+                .Include(f => f.Brand)
                 .ToListAsync();
 
         public async Task<Fragrance?> GetByIdAsync(int id)
             => await context.Fragrances
                 .Include(f => f.Category)
+                .Include(f => f.Brand)
                 .FirstOrDefaultAsync(f => f.Id == id);
 
         public async Task CreateAsync(FragranceFormModel model)
@@ -38,8 +40,9 @@ namespace Frags.Services.Services
                 Price = model.Price!.Value,
                 ImageUrl = model.ImageUrl,
                 Description = model.Description,
-                Gender = model.Gender,
-                CategoryId = model.CategoryId!.Value
+                BrandId = model.BrandId!.Value,
+                CategoryId = model.CategoryId!.Value,
+                Gender = model.Gender
             };
 
             await context.Fragrances.AddAsync(fragrance);
@@ -57,9 +60,9 @@ namespace Frags.Services.Services
             fragrance.Price = model.Price!.Value;
             fragrance.ImageUrl = model.ImageUrl;
             fragrance.Description = model.Description;
-            fragrance.Gender = model.Gender;
+            fragrance.BrandId = model.BrandId!.Value;
             fragrance.CategoryId = model.CategoryId!.Value;
-
+            fragrance.Gender = model.Gender;
             await context.SaveChangesAsync();
         }
 
@@ -76,7 +79,10 @@ namespace Frags.Services.Services
 
         public async Task<FragranceFormModel?> GetForEditAsync(int id)
         {
-            var fragrance = await context.Fragrances.FindAsync(id);
+            var fragrance = await context.Fragrances
+                .Include(f => f.Category)
+                .Include(f => f.Brand)
+                .FirstOrDefaultAsync(f => f.Id == id);
 
             if (fragrance == null)
                 return null;
@@ -88,9 +94,11 @@ namespace Frags.Services.Services
                 Price = fragrance.Price,
                 ImageUrl = fragrance.ImageUrl,
                 Description = fragrance.Description,
-                Gender = fragrance.Gender,
+                BrandId = fragrance.BrandId,
+                Brands = await context.Brands.ToListAsync(),
                 CategoryId = fragrance.CategoryId,
-                Categories = await context.Categories.ToListAsync()
+                Categories = await context.Categories.ToListAsync(),
+                Gender = fragrance.Gender
             };
         }
     }
