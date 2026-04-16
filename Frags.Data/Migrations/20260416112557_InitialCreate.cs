@@ -49,6 +49,19 @@ namespace Frags.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -178,17 +191,34 @@ namespace Frags.Data.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fragrances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Fragrances_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Fragrances_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Brands",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Dior" },
+                    { 2, "Yves Saint Laurent" },
+                    { 3, "Tom Ford" }
                 });
 
             migrationBuilder.InsertData(
@@ -204,13 +234,13 @@ namespace Frags.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Fragrances",
-                columns: new[] { "Id", "CategoryId", "Description", "Gender", "ImageUrl", "Name", "Price" },
+                columns: new[] { "Id", "BrandId", "CategoryId", "Description", "Gender", "ImageUrl", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, 1, "A fresh spicy fragrance.", "Men", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.31861.avif", "Dior Sauvage", 120m },
-                    { 2, 2, "A white floral fragrance.", "Women", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.65936.avif", "YSL Libre", 140m },
-                    { 3, 3, "A woody fragrance.", "Unisex", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.1826.avif", "Tom Ford Oud Wood", 215m },
-                    { 4, 4, "An oriental vanilla fragrance.", "Women", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25324.avif", "YSL Black Opium", 130m }
+                    { 1, 1, 1, "A fresh spicy fragrance.", "Men", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.31861.avif", "Sauvage", 120m },
+                    { 2, 2, 2, "A white floral fragrance.", "Women", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.65936.avif", "Libre", 140m },
+                    { 3, 3, 3, "A woody fragrance.", "Unisex", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.1826.avif", "Oud Wood", 215m },
+                    { 4, 2, 4, "An oriental vanilla fragrance.", "Women", "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25324.avif", "Black Opium", 130m }
                 });
 
             migrationBuilder.CreateIndex(
@@ -253,6 +283,11 @@ namespace Frags.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Fragrances_BrandId",
+                table: "Fragrances",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fragrances_CategoryId",
                 table: "Fragrances",
                 column: "CategoryId");
@@ -283,6 +318,9 @@ namespace Frags.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "Categories");

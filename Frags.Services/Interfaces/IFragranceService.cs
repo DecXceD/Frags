@@ -14,11 +14,9 @@ namespace Frags.Services.Interfaces
     {
         Task<IEnumerable<Fragrance>> GetAllAsync();
         Task<Fragrance?> GetByIdAsync(int id);
-
         Task CreateAsync(FragranceFormModel model);
         Task<FragranceFormModel?> GetForEditAsync(int id);
         Task UpdateAsync(int id, FragranceFormModel model);
-
         Task DeleteAsync(int id);
     }
 }

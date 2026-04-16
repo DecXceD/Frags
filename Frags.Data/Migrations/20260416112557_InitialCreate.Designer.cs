@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Frags.Data.Migrations
 {
     [DbContext(typeof(FragsDbContext))]
-    [Migration("20260409190325_InitialCreate")]
+    [Migration("20260416112557_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,41 @@ namespace Frags.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Frags.Data.Models.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dior"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Yves Saint Laurent"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tom Ford"
+                        });
+                });
 
             modelBuilder.Entity("Frags.Data.Models.Category", b =>
                 {
@@ -72,6 +107,9 @@ namespace Frags.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -98,6 +136,8 @@ namespace Frags.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Fragrances");
@@ -106,41 +146,45 @@ namespace Frags.Data.Migrations
                         new
                         {
                             Id = 1,
+                            BrandId = 1,
                             CategoryId = 1,
                             Description = "A fresh spicy fragrance.",
                             Gender = "Men",
                             ImageUrl = "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.31861.avif",
-                            Name = "Dior Sauvage",
+                            Name = "Sauvage",
                             Price = 120m
                         },
                         new
                         {
                             Id = 2,
+                            BrandId = 2,
                             CategoryId = 2,
                             Description = "A white floral fragrance.",
                             Gender = "Women",
                             ImageUrl = "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.65936.avif",
-                            Name = "YSL Libre",
+                            Name = "Libre",
                             Price = 140m
                         },
                         new
                         {
                             Id = 3,
+                            BrandId = 3,
                             CategoryId = 3,
                             Description = "A woody fragrance.",
                             Gender = "Unisex",
                             ImageUrl = "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.1826.avif",
-                            Name = "Tom Ford Oud Wood",
+                            Name = "Oud Wood",
                             Price = 215m
                         },
                         new
                         {
                             Id = 4,
+                            BrandId = 2,
                             CategoryId = 4,
                             Description = "An oriental vanilla fragrance.",
                             Gender = "Women",
                             ImageUrl = "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25324.avif",
-                            Name = "YSL Black Opium",
+                            Name = "Black Opium",
                             Price = 130m
                         });
                 });
@@ -349,11 +393,19 @@ namespace Frags.Data.Migrations
 
             modelBuilder.Entity("Frags.Data.Models.Fragrance", b =>
                 {
+                    b.HasOne("Frags.Data.Models.Brand", "Brand")
+                        .WithMany("Fragrances")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Frags.Data.Models.Category", "Category")
                         .WithMany("Fragrances")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });
@@ -407,6 +459,11 @@ namespace Frags.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Frags.Data.Models.Brand", b =>
+                {
+                    b.Navigation("Fragrances");
                 });
 
             modelBuilder.Entity("Frags.Data.Models.Category", b =>
