@@ -14,5 +14,6 @@ namespace Frags.Data.Validation
         public const int CategoryNameMaxLength = 50;
         public const double FragrancePriceMin = 1;
         public const double FragrancePriceMax = 10000;
+        public const int BrandNameMaxLength = 100;
     }
 }

@@ -15,6 +15,8 @@ public class FragsDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Fragrance> Fragrances { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
 
+    public DbSet<Brand> Brands { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
