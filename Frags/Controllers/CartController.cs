@@ -5,7 +5,6 @@ using System.Security.Claims;
 
 namespace Frags.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService cartService;
@@ -15,22 +14,35 @@ namespace Frags.Controllers
             this.cartService = cartService;
         }
 
+        private string GetSessionId()
+        {
+            if (HttpContext.Session.GetString("Init") == null)
+            {
+                HttpContext.Session.SetString("Init", "1");
+            }
+
+            return HttpContext.Session.Id;
+        }
+
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var sessionId = GetSessionId();
 
-            var items = await cartService.GetUserCartAsync(userId!);
+            var items = await cartService.GetCartItemsAsync(sessionId);
+            var total = await cartService.GetTotalAsync(sessionId);
+
+            ViewBag.Total = total;
 
             return View(items);
         }
 
         public async Task<IActionResult> Add(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var sessionId = GetSessionId();
 
-            await cartService.AddToCartAsync(id, userId!);
+            await cartService.AddToCartAsync(id, sessionId);
 
-            return RedirectToAction("Index", "Shop");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         public async Task<IActionResult> Remove(int id)

@@ -19,10 +19,10 @@ namespace Frags.Services.Services
             this.context = context;
         }
 
-        public async Task AddToCartAsync(int fragranceId, string userId)
+        public async Task AddToCartAsync(int fragranceId, string sessionId)
         {
             var existing = await context.CartItems
-                .FirstOrDefaultAsync(c => c.FragranceId == fragranceId && c.UserId == userId);
+                .FirstOrDefaultAsync(c => c.FragranceId == fragranceId && c.SessionId == sessionId);
 
             if (existing != null)
             {
@@ -30,21 +30,24 @@ namespace Frags.Services.Services
             }
             else
             {
-                await context.CartItems.AddAsync(new CartItem
+                var item = new CartItem
                 {
                     FragranceId = fragranceId,
-                    UserId = userId,
-                    Quantity = 1
-                });
+                    Quantity = 1,
+                    SessionId = sessionId
+                };
+
+                await context.CartItems.AddAsync(item);
             }
 
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<CartItem>> GetUserCartAsync(string userId)
+        public async Task<IEnumerable<CartItem>> GetCartItemsAsync(string sessionId)
             => await context.CartItems
                 .Include(c => c.Fragrance)
                 .ThenInclude(f => f.Brand)
+                .Where(c => c.SessionId == sessionId)
                 .ToListAsync();
 
         public async Task RemoveAsync(int id)
@@ -56,6 +59,23 @@ namespace Frags.Services.Services
                 context.CartItems.Remove(item);
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task<decimal> GetTotalAsync(string sessionId)
+        {
+            var items = await context.CartItems
+                .Include(c => c.Fragrance)
+                .Where(c => c.SessionId == sessionId)
+                .ToListAsync();
+
+            return items.Sum(i => i.Fragrance.Price * i.Quantity);
+        }
+
+        public async Task<int> GetCartCountAsync(string sessionId)
+        {
+            return await context.CartItems
+                .Where(c => c.SessionId == sessionId)
+                .SumAsync(c => c.Quantity);
         }
     }
 }

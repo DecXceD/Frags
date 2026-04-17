@@ -1,0 +1,47 @@
+﻿@using Frags.Data.Models
+@model IEnumerable<CartItem>
+
+@{
+    var total = Model.Sum(x => x.Quantity * x.Fragrance.Price);
+}
+
+<h2>Your Cart</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fragrance</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Fragrance.Name</td>
+                    <td>@item.Fragrance.Brand?.Name</td>
+                    <td>$@item.Fragrance.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        <a asp-action="Remove"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-danger">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="mt-3 text-end">Total: $@total.ToString("F2")</h4>
+}

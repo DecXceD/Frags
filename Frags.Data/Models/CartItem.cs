@@ -13,8 +13,8 @@ namespace Frags.Data.Models
         public int FragranceId { get; set; }
         public Fragrance Fragrance { get; set; } = null!;
 
-        public string UserId { get; set; } = null!;
+        public int Quantity { get; set; }
 
-        public int Quantity { get; set; } = 1;
+        public string SessionId { get; set; } = null!;
     }
 }

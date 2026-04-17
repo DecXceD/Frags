@@ -9,8 +9,10 @@ namespace Frags.Services.Interfaces
 {
     public interface ICartService
     {
-        Task AddToCartAsync(int fragranceId, string userId);
-        Task<IEnumerable<CartItem>> GetUserCartAsync(string userId);
+        Task AddToCartAsync(int fragranceId, string sessionId);
+        Task<IEnumerable<CartItem>> GetCartItemsAsync(string sessionId);
         Task RemoveAsync(int id);
+        Task<decimal> GetTotalAsync(string sessionId);
+        Task<int> GetCartCountAsync(string sessionId);
     }
 }
