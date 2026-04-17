@@ -20,6 +20,21 @@
 
         <h4 class="fw-bold mb-3">$@Model.Price</h4>
 
+        <div class="mb-3">
+            <a asp-controller="Cart"
+                   asp-action="Add"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-dark me-2">
+                Add to Cart
+            </a>
+
+            <a asp-controller="Cart"
+                   asp-action="Index"
+                   class="btn btn-outline-secondary">
+                View Cart
+            </a>
+        </div>
+
         <p>@Model.Description</p>
 
         <a asp-controller="Shop"
