@@ -51,5 +51,17 @@ namespace Frags.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Increase(int id)
+        {
+            await cartService.IncreaseAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Decrease(int id)
+        {
+            await cartService.DecreaseAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

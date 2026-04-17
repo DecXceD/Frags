@@ -77,5 +77,33 @@ namespace Frags.Services.Services
                 .Where(c => c.SessionId == sessionId)
                 .SumAsync(c => c.Quantity);
         }
+
+        public async Task IncreaseAsync(int id)
+        {
+            var item = await context.CartItems.FindAsync(id);
+
+            if (item != null)
+            {
+                item.Quantity++;
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DecreaseAsync(int id)
+        {
+            var item = await context.CartItems.FindAsync(id);
+
+            if (item == null)
+                return;
+
+            item.Quantity--;
+
+            if (item.Quantity <= 0)
+            {
+                context.CartItems.Remove(item);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

@@ -14,5 +14,7 @@ namespace Frags.Services.Interfaces
         Task RemoveAsync(int id);
         Task<decimal> GetTotalAsync(string sessionId);
         Task<int> GetCartCountAsync(string sessionId);
+        Task IncreaseAsync(int id);
+        Task DecreaseAsync(int id);
     }
 }
