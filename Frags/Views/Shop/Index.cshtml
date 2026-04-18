@@ -5,6 +5,66 @@
 
 <h2 class="mb-4">Shop</h2>
 
+<form method="get" class="row mb-4">
+
+    <div class="col-md-3">
+        <input type="text" name="search" class="form-control"
+               placeholder="Search fragrance..."
+               value="@Context.Request.Query["search"]" />
+    </div>
+
+    <div class="col-md-2">
+        <select name="brandId" class="form-control">
+            <option value="" selected="@(string.IsNullOrEmpty(Context.Request.Query["brandId"]))">
+                All Brands
+            </option>
+            @foreach (var b in ViewBag.Brands)
+            {
+                <option value="@b.Id"
+                        selected="@(Context.Request.Query["brandId"] == b.Id.ToString())">
+                    @b.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="categoryId" class="form-control">
+            <option value="" selected="@(string.IsNullOrEmpty(Context.Request.Query["categoryId"]))">
+                All Categories
+            </option>
+            @foreach (var c in ViewBag.Categories)
+            {
+                <option value="@c.Id"
+                        selected="@(Context.Request.Query["categoryId"] == c.Id.ToString())">
+                    @c.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="gender" class="form-control">
+            <option value="" selected="@(string.IsNullOrEmpty(Context.Request.Query["gender"]))">
+                Gender
+            </option>
+            <option value="Men"
+                    selected="@(Context.Request.Query["gender"] == "Men")">Men</option>
+
+            <option value="Women"
+                    selected="@(Context.Request.Query["gender"] == "Women")">Women</option>
+
+            <option value="Unisex"
+                    selected="@(Context.Request.Query["gender"] == "Unisex")">Unisex</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">Filter</button>
+    </div>
+
+</form>
+
 <div class="row">
     @foreach (var item in Model)
     {
@@ -58,3 +118,22 @@
         </div>
     }
 </div>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                           href="?page=@i&search=@Context.Request.Query["search"]&brandId=@Context.Request.Query["brandId"]&categoryId=@Context.Request.Query["categoryId"]&gender=@Context.Request.Query["gender"]">
+                        @i
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+}
