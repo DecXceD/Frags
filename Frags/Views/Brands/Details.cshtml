@@ -1,0 +1,41 @@
+﻿@using Frags.Data.Models
+@model Brand
+
+<h2>@Model.Name</h2>
+
+<div class="row">
+    @foreach (var item in Model.Fragrances)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+
+                <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id">
+                    <img src="@item.ImageUrl" class="card-img-top" />
+                </a>
+
+                <div class="card-body text-center">
+
+                    <p class="text-muted small mb-1">@item.Brand?.Name</p>
+
+                    <h5 class="card-title text-truncate">
+                        <a asp-controller="Shop"
+                               asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="text-dark text-decoration-none">
+                            @item.Name
+                        </a>
+                    </h5>
+
+                    <p class="text-secondary small mb-1">
+                        @item.Category?.Name
+                    </p>
+                    <p class="text-muted small">
+                        @item.Gender
+                    </p>
+
+                    <p class="fw-bold">$@item.Price</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

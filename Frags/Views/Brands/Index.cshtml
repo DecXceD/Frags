@@ -1,0 +1,15 @@
+﻿@using Frags.Data.Models
+@model IEnumerable<Brand>
+
+<h2>Brands</h2>
+
+<ul class="list-group">
+    @foreach (var brand in Model)
+    {
+        <li class="list-group-item">
+            <a asp-action="Details" asp-route-id="@brand.Id">
+                @brand.Name
+            </a>
+        </li>
+    }
+</ul>
