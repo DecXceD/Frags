@@ -23,6 +23,7 @@ builder.Services.AddScoped<IFragranceService, FragranceService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
