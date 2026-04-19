@@ -8,5 +8,7 @@
         public const int BrandNameMaxLength = 100;
         public const double FragrancePriceMin = 0.01;
         public const double FragrancePriceMax = 10000;
+        public const int ContactEmailMaxLength = 100;
+        public const int ContactPhoneMaxLength = 20;
     }
 }

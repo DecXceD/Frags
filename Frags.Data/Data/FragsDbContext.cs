@@ -17,6 +17,7 @@ public class FragsDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Brand> Brands { get; set; } = null!;
     public DbSet<CartItem> CartItems { get; set; } = null!;
+    public DbSet<Contact> Contacts { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -81,5 +82,14 @@ public class FragsDbContext : IdentityDbContext<IdentityUser>
                 BrandId = 2
             }
         );
+
+        builder.Entity<Contact>().HasData(
+        new Contact
+        {
+            Id = 1,
+            Email = "alexanderisaev@abv.bg",
+            Phone = "+359888123456"
+        }
+);
     }
 }
