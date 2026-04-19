@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Frags.Data.Models.Fragrance>
+﻿@model IEnumerable<Frags.Services.ViewModels.Fragrance.FragranceViewModel>
 @{
     ViewData["Title"] = "Shop";
 }
@@ -82,7 +82,7 @@
                                asp-action="Details"
                                asp-route-id="@item.BrandId"
                                class="text-muted text-decoration-none">
-                            @item.Brand?.Name
+                            @item.Brand
                         </a>
                     </p>
 
@@ -98,7 +98,7 @@
                                asp-action="Details"
                                asp-route-id="@item.CategoryId"
                                class="text-secondary text-decoration-none">
-                            @item.Category?.Name
+                            @item.Category
                         </a>
                     </p>
 

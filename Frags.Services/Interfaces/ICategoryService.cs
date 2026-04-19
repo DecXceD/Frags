@@ -1,14 +1,14 @@
-﻿using Frags.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Frags.Services.ViewModels.Category;
 
 namespace Frags.Services.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetAllAsync();
+        Task<IEnumerable<CategoryFormModel>> GetAllAsync();
+        Task<CategoryFormModel?> GetByIdAsync(int id);
+        Task<CategoryViewModel?> GetViewByIdAsync(int id);
+        Task CreateAsync(CategoryFormModel category);
+        Task EditAsync(CategoryFormModel category);
+        Task DeleteAsync(int id);
     }
 }

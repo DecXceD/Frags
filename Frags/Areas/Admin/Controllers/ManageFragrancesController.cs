@@ -2,7 +2,8 @@
 using Frags.Data.Models;
 using Frags.Services.Interfaces;
 using Frags.Services.Services;
-using Frags.ViewModels.Fragrance;
+using Frags.Services.ViewModels.Fragrance;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +12,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Frags.Controllers
+namespace Frags.Areas.Admin.Controllers
 {
-    public class FragrancesController : Controller
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    public class ManageFragrancesController : Controller
     {
         private readonly IFragranceService fragranceService;
         private readonly ICategoryService categoryService;
         private readonly IBrandService brandService;
 
-        public FragrancesController(IFragranceService fragranceService, ICategoryService categoryService, IBrandService brandService)
+        public ManageFragrancesController(IFragranceService fragranceService, ICategoryService categoryService, IBrandService brandService)
         {
             this.fragranceService = fragranceService;
             this.categoryService = categoryService;

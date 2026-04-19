@@ -1,5 +1,5 @@
-﻿@using Frags.Data.Models
-@model Category
+﻿@using Frags.Services.ViewModels.Category
+@model CategoryViewModel
 
 <h2>@Model.Name</h2>
 
@@ -15,7 +15,7 @@
 
                 <div class="card-body text-center">
 
-                    <p class="text-muted small mb-1">@item.Brand?.Name</p>
+                    <p class="text-muted small mb-1">@item.Brand</p>
 
                     <h5 class="card-title text-truncate">
                         <a asp-controller="Shop"
@@ -27,7 +27,7 @@
                     </h5>
 
                     <p class="text-secondary small mb-1">
-                        @item.Category?.Name
+                        @item.Category
                     </p>
                     <p class="text-muted small">
                         @item.Gender

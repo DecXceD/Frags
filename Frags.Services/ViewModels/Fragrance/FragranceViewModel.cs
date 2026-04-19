@@ -1,11 +1,9 @@
 ﻿using Frags.Data.Validation;
-using Frags.Services.ViewModels.Brand;
-using Frags.Services.ViewModels.Category;
 using System.ComponentModel.DataAnnotations;
 
 namespace Frags.Services.ViewModels.Fragrance
 {
-    public class FragranceFormModel
+    public class FragranceViewModel
     {
         public int Id { get; set; }
 
@@ -27,16 +25,15 @@ namespace Frags.Services.ViewModels.Fragrance
 
         [Display(Name = "Brand")]
         [Required]
+        public string Brand { get; set; } = string.Empty;
+
         public int? BrandId { get; set; }
-
-        public IEnumerable<BrandFormModel> Brands { get; set; } = new List<BrandFormModel>();
-
 
         [Display(Name = "Category")]
         [Required]
-        public int? CategoryId { get; set; }
+        public string Category { get; set; } = string.Empty;
 
-        public IEnumerable<CategoryFormModel> Categories { get; set; } = new List<CategoryFormModel>();
+        public int? CategoryId { get; set; }
 
         [Required]
         public string Gender { get; set; } = null!;

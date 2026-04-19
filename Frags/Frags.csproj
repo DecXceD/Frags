@@ -23,4 +23,9 @@
     <ProjectReference Include="..\Frags.Services\Frags.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Categories\" />
+    <Folder Include="Areas\Admin\Views\Brands\" />
+  </ItemGroup>
+
 </Project>

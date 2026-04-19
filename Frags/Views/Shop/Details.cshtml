@@ -1,4 +1,4 @@
-﻿@model Frags.Data.Models.Fragrance
+﻿@model Frags.Services.ViewModels.Fragrance.FragranceViewModel
 
 <div class="row">
     <div class="col-md-6">
@@ -14,7 +14,7 @@
                    asp-action="Details"
                    asp-route-id="@Model.BrandId"
                    class="text-muted text-decoration-underline">
-                @Model.Brand?.Name
+                @Model.Brand
             </a>
         </p>
 
@@ -27,7 +27,7 @@
                    asp-action="Details"
                    asp-route-id="@Model.CategoryId"
                    class="text-muted text-decoration-underline">
-                @Model.Category?.Name
+                @Model.Category
             </a>
         </p>
 

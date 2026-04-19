@@ -1,4 +1,5 @@
 ﻿using Frags.Data.Data;
+using Frags.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,25 +7,22 @@ namespace Frags.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly FragsDbContext context;
+        private readonly ICategoryService categoryService;
 
-        public CategoriesController(FragsDbContext context)
+        public CategoriesController(ICategoryService categoryService)
         {
-            this.context = context;
+            this.categoryService = categoryService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var categories = await context.Categories.ToListAsync();
+            var categories = await categoryService.GetAllAsync();
             return View(categories);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var category = await context.Categories
-                .Include(c => c.Fragrances)
-                .ThenInclude(f => f.Brand)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var category = await categoryService.GetViewByIdAsync(id);
 
             if (category == null) return NotFound();
 

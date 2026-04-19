@@ -1,15 +1,13 @@
-﻿using Frags.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Frags.Services.ViewModels.Brand;
 
 namespace Frags.Services.Interfaces
 {
     public interface IBrandService
     {
-        Task<IEnumerable<Brand>> GetAllAsync();
-        Task<Brand?> GetByIdAsync(int id);
+        Task<IEnumerable<BrandFormModel>> GetAllAsync();
+        Task<BrandFormModel?> GetByIdAsync(int id);
+        Task CreateAsync(BrandFormModel brand);
+        Task EditAsync(BrandFormModel brand);
+        Task DeleteAsync(int id);
     }
 }

@@ -1,35 +1,59 @@
 ﻿using Frags.Data.Data;
 using Frags.Data.Models;
 using Frags.Services.Interfaces;
-using Frags.ViewModels.Fragrance;
+using Frags.Services.ViewModels.Fragrance;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Frags.Services.Services
 {
     public class FragranceService : IFragranceService
     {
         private readonly FragsDbContext context;
+        private readonly IBrandService brandService;
+        private readonly ICategoryService categoryService;
 
-        public FragranceService(FragsDbContext context)
+        public FragranceService(FragsDbContext context, IBrandService brandService, ICategoryService categoryService)
         {
             this.context = context;
+            this.brandService = brandService;
+            this.categoryService = categoryService;
         }
 
-        public async Task<IEnumerable<Fragrance>> GetAllAsync()
+        public async Task<IEnumerable<FragranceViewModel>> GetAllAsync()
             => await context.Fragrances
                 .Include(f => f.Category)
                 .Include(f => f.Brand)
-                .ToListAsync();
+                .Select(f => new FragranceViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Price = f.Price,
+                    ImageUrl = f.ImageUrl,
+                    Description = f.Description,
+                    Brand = f.Brand!.Name,
+                    BrandId = f.BrandId,
+                    Category = f.Category!.Name,
+                    CategoryId = f.CategoryId,
+                    Gender = f.Gender,
+                }).ToListAsync();
 
-        public async Task<Fragrance?> GetByIdAsync(int id)
+        public async Task<FragranceViewModel?> GetByIdAsync(int id)
             => await context.Fragrances
                 .Include(f => f.Category)
                 .Include(f => f.Brand)
+                .Select(f => new FragranceViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Price = f.Price,
+                    ImageUrl = f.ImageUrl,
+                    Description = f.Description,
+                    Brand = f.Brand!.Name,
+                    BrandId = f.BrandId,
+                    Category = f.Category!.Name,
+                    CategoryId = f.CategoryId,
+                    Gender = f.Gender,
+                })
                 .FirstOrDefaultAsync(f => f.Id == id);
 
         public async Task CreateAsync(FragranceFormModel model)
@@ -95,9 +119,9 @@ namespace Frags.Services.Services
                 ImageUrl = fragrance.ImageUrl,
                 Description = fragrance.Description,
                 BrandId = fragrance.BrandId,
-                Brands = await context.Brands.ToListAsync(),
+                Brands = await brandService.GetAllAsync(),
                 CategoryId = fragrance.CategoryId,
-                Categories = await context.Categories.ToListAsync(),
+                Categories = await categoryService.GetAllAsync(),
                 Gender = fragrance.Gender
             };
         }
