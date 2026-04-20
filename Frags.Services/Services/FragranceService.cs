@@ -125,5 +125,76 @@ namespace Frags.Services.Services
                 Gender = fragrance.Gender
             };
         }
+
+        public async Task<FragranceShopModel> FragranceFilterAsync(string search, int? brandId, int? categoryId, string gender, string sort, int page)
+        {
+            int pageSize = 8;
+
+            var query = context.Fragrances
+                .Include(f => f.Brand)
+                .Include(f => f.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(f => f.Name.Contains(search));
+            }
+
+            if (brandId.HasValue)
+            {
+                query = query.Where(f => f.BrandId == brandId);
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(f => f.CategoryId == categoryId);
+            }
+
+            if (!string.IsNullOrEmpty(gender))
+            {
+                query = query.Where(f => f.Gender == gender);
+            }
+
+            switch (sort)
+            {
+                case "price_asc":
+                    query = query.OrderBy(f => f.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(f => f.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(f => f.Name);
+                    break;
+                default:
+                    query = query.OrderBy(f => f.Id);
+                    break;
+            }
+
+            int totalItems = await query.CountAsync();
+
+            var fragrances = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(f => new FragranceViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Price = f.Price,
+                    ImageUrl = f.ImageUrl,
+                    Description = f.Description,
+                    Brand = f.Brand!.Name,
+                    BrandId = f.BrandId,
+                    Category = f.Category!.Name,
+                    CategoryId = f.CategoryId,
+                    Gender = f.Gender,
+                }).ToListAsync();
+
+            return new FragranceShopModel
+            {
+                Fragrances = fragrances,
+                TotalItems = totalItems
+            };
+        }
     }
 }

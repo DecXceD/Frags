@@ -15,6 +15,12 @@ builder.Services.AddDbContext<FragsDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
+
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<FragsDbContext>();
@@ -84,11 +90,21 @@ using (var scope = app.Services.CreateScope())
     }
 
     var adminEmail = "alexanderisaev@abv.bg";
+    var adminPassword = "admin123";
+
     var user = await userManager.FindByEmailAsync(adminEmail);
 
-    if (user != null && !await userManager.IsInRoleAsync(user, "Admin"))
+    if (user == null)
     {
-        await userManager.AddToRoleAsync(user, "Admin");
+        var admin = new IdentityUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(admin, adminPassword);
+        await userManager.AddToRoleAsync(admin, "Admin");
     }
 }
 

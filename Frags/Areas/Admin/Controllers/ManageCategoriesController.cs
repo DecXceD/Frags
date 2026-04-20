@@ -1,4 +1,5 @@
 ﻿using Frags.Services.Interfaces;
+using Frags.Services.Services;
 using Frags.Services.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,7 @@ namespace Frags.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CategoryFormModel category)
         {
             if (!ModelState.IsValid) 
@@ -56,9 +58,17 @@ namespace Frags.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var brand = await categoryService.GetByIdAsync(id);
+            if (brand == null) return NotFound();
+            return View(brand);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await categoryService.DeleteAsync(id);
 

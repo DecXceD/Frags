@@ -1,16 +1,19 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Frags.Data.Data;
+using Frags.Services.Interfaces;
 
 namespace Frags.Controllers
 {
     public class ShopController : Controller
     {
         private readonly FragsDbContext _context;
+        private readonly IFragranceService fragranceService;
 
-        public ShopController(FragsDbContext context)
+        public ShopController(FragsDbContext context, IFragranceService fragranceService)
         {
             _context = context;
+            this.fragranceService = fragranceService;
         }
 
         public async Task<IActionResult> Index(
@@ -22,72 +25,21 @@ namespace Frags.Controllers
         int page = 1)
         {
             int pageSize = 8;
-
-            var query = _context.Fragrances
-                .Include(f => f.Brand)
-                .Include(f => f.Category)
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                query = query.Where(f => f.Name.Contains(search));
-            }
-
-            if (brandId.HasValue)
-            {
-                query = query.Where(f => f.BrandId == brandId);
-            }
-
-            if (categoryId.HasValue)
-            {
-                query = query.Where(f => f.CategoryId == categoryId);
-            }
-
-            if (!string.IsNullOrEmpty(gender))
-            {
-                query = query.Where(f => f.Gender == gender);
-            }
-
-            switch (sort)
-            {
-                case "price_asc":
-                    query = query.OrderBy(f => f.Price);
-                    break;
-                case "price_desc":
-                    query = query.OrderByDescending(f => f.Price);
-                    break;
-                case "name":
-                    query = query.OrderBy(f => f.Name);
-                    break;
-                default:
-                    query = query.OrderBy(f => f.Id);
-                    break;
-            }
-
-            int totalItems = await query.CountAsync();
-
-            ViewBag.TotalItems = totalItems;
-
-            var fragrances = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            var result = await fragranceService.FragranceFilterAsync(search, brandId, categoryId, gender, sort, page);
+            ViewBag.TotalItems = result.TotalItems;
 
             ViewBag.Brands = await _context.Brands.ToListAsync();
             ViewBag.Categories = await _context.Categories.ToListAsync();
 
             ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.TotalPages = (int)Math.Ceiling((double)result.TotalItems / pageSize);
 
-            return View(fragrances);
+            return View(result.Fragrances);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var fragrance = await _context.Fragrances
-                .Include(f => f.Brand)
-                .Include(f => f.Category)
-                .FirstOrDefaultAsync(f => f.Id == id);
+            var fragrance = await fragranceService.GetByIdAsync(id);
 
             if (fragrance == null)
             {

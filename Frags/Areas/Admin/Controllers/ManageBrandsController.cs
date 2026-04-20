@@ -47,6 +47,7 @@ namespace Frags.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(BrandFormModel brand)
         {
             if (!ModelState.IsValid) 
@@ -57,9 +58,17 @@ namespace Frags.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var brand = await brandService.GetByIdAsync(id);
+            if (brand == null) return NotFound();
+            return View(brand);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await brandService.DeleteAsync(id);
 

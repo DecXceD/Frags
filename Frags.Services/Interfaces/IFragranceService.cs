@@ -12,5 +12,6 @@ namespace Frags.Services.Interfaces
         Task<FragranceFormModel?> GetForEditAsync(int id);
         Task UpdateAsync(int id, FragranceFormModel model);
         Task DeleteAsync(int id);
+        Task<FragranceShopModel> FragranceFilterAsync(string search, int? brandId, int? categoryId, string gender, string sort, int page);
     }
 }

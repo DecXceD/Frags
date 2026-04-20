@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Frags.Data.Models
 
         public int Quantity { get; set; }
 
+        [Required]
         public string SessionId { get; set; } = null!;
     }
 }
