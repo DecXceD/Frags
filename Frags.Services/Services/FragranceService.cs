@@ -126,7 +126,7 @@ namespace Frags.Services.Services
             };
         }
 
-        public async Task<FragranceShopModel> FragranceFilterAsync(string search, int? brandId, int? categoryId, string gender, string sort, int page)
+        public async Task<FragranceShopModel> FragranceFilterAsync(string? search, int? brandId, int? categoryId, string? gender, string? sort, int page)
         {
             int pageSize = 8;
 
@@ -135,9 +135,21 @@ namespace Frags.Services.Services
                 .Include(f => f.Category)
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                query = query.Where(f => f.Name.Contains(search));
+                var terms = search
+                    .ToLower()
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var term in terms)
+                {
+                    query = query.Where(f =>
+                        f.Name.ToLower().Contains(term) ||
+                        f.Brand!.Name.ToLower().Contains(term) ||
+                        f.Category!.Name.ToLower().Contains(term) ||
+                        f.Gender.ToLower().Contains(term)
+                    );
+                }
             }
 
             if (brandId.HasValue)
