@@ -296,8 +296,8 @@ The project runs using the default configuration. If needed, the connection stri
 
 ## Future Improvements
 - Structure fixes
-- Orders
-- Reviews
+- Add Orders
+- Add Reviews
 
 ## Author
 Alexander Isaev (DecXceD)  
