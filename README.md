@@ -281,9 +281,9 @@ The project follows a layered architecture:
 1. Clone the repository  
 2. Open the solution in Visual Studio  
 3. Restore NuGet packages  
-4. Run Update-Database in the Package Manager Console to apply migrations and seed the database  
-5. In `Program.cs`, set an email and a password to create a default admin user
-6. In `FragsDbContext`, set an email and a phone number to seed contact information
+4. In `Program.cs`, set an email and a password to create a default admin user
+5. In `FragsDbContext.cs`, set an email and a phone number to seed contact information
+6. Run Update-Database in the Package Manager Console to apply migrations and seed the database  
 7. Start the application  
 
 The project runs using the default configuration. If needed, the connection string can be changed from `appsettings.json` to access the database from MSSQL instead of SQL Server Object Explorer.
