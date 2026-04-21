@@ -1,7 +1,5 @@
-﻿using Frags.Data.Data;
-using Frags.Services.Interfaces;
+﻿using Frags.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Frags.Controllers
 {
