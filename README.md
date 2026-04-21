@@ -295,7 +295,8 @@ The project runs using the default configuration. If needed, the connection stri
 - EF Core InMemory database
 
 ## Future Improvements
-- Orders and checkout  
+- Structure fixes
+- Orders
 - Reviews
 
 ## Author
